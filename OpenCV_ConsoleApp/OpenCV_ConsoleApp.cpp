@@ -8,11 +8,12 @@ using namespace std;
 using namespace cv;
 int main()
 {
-	Mat img = imread("4K.jpg");
+	Mat img = imread("4K1.jpg");
 	Mat imgGray;
 	cvtColor(img, imgGray, COLOR_BGR2GRAY);
 	namedWindow("image", WINDOW_NORMAL);
 	imshow("image", imgGray);
+	imwrite("4K1_Gray.jpg", imgGray);
 	waitKey(0);
 	return 0;
 }
