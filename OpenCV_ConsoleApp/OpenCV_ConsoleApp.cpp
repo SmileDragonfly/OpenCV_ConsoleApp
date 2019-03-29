@@ -4,16 +4,35 @@
 #include "pch.h"
 #include<opencv2/opencv.hpp>
 #include<iostream>
+#define _CRT_SECURE_NO_WARNINGS
 using namespace std;
 using namespace cv;
 int main()
 {
-	Mat img = imread("4K1.jpg");
-	Mat imgGray;
-	cvtColor(img, imgGray, COLOR_BGR2GRAY);
-	namedWindow("image", WINDOW_NORMAL);
-	imshow("image", imgGray);
-	imwrite("4K1_Gray.jpg", imgGray);
+	VideoCapture video;
+	video.open("EX_HATE_ME.mp4");
+	unsigned int count = 0;
+	while (count < 1000)
+	{
+		Mat frame;
+		video >> frame;
+		if ((count % 20) == 0)
+		{
+			string sfileName = "img_00";
+			char pBuffer[3];
+			int a = count / 20;
+			_itoa_s(a, pBuffer, 10);
+			sfileName += pBuffer;
+			sfileName += ".jpg";
+			printf("\n%s", sfileName);
+			imwrite(sfileName,frame);
+		}
+		//if (waitKey(0) == 'c')
+		//{
+		//	break;
+		//}
+		count++;
+	}
 	waitKey(0);
 	return 0;
 }
