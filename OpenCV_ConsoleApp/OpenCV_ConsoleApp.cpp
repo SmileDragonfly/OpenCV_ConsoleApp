@@ -10,27 +10,20 @@ using namespace cv;
 int main()
 {
 	VideoCapture video;
-	video.open("EX_HATE_ME.mp4");
+	video.open("BAD_BOY.mp4");
 	unsigned int count = 0;
-	while (count < 1000)
+	void *pData = (void*)1;
+	while (pData != NULL)
 	{
 		Mat frame;
 		video >> frame;
-		if ((count % 20) == 0)
-		{
-			string sfileName = "img_00";
-			char pBuffer[3];
-			int a = count / 20;
-			_itoa_s(a, pBuffer, 10);
-			sfileName += pBuffer;
-			sfileName += ".jpg";
-			printf("\n%s", sfileName);
-			imwrite(sfileName,frame);
-		}
-		//if (waitKey(0) == 'c')
-		//{
-		//	break;
-		//}
+		pData = frame.data;
+		string sfileName = "img_00";
+		char pBuffer[5];
+		_itoa_s(count, pBuffer, 10);
+		sfileName += pBuffer;
+		sfileName += ".jpg";
+		imwrite(sfileName,frame);
 		count++;
 	}
 	waitKey(0);
