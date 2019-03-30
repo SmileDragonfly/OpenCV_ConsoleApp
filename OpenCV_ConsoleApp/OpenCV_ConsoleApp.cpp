@@ -15,15 +15,21 @@ int main()
 	void *pData = (void*)1;
 	while (pData != NULL)
 	{
-		Mat frame;
-		video >> frame;
-		pData = frame.data;
+		Mat *pframe = new Mat;
+		Mat* pframeGray = new Mat;;
+		video >> *pframe;
+		pData = pframe->data;
 		string sfileName = "img_00";
 		char pBuffer[5];
 		_itoa_s(count, pBuffer, 10);
 		sfileName += pBuffer;
 		sfileName += ".jpg";
-		imwrite(sfileName,frame);
+		cvtColor(*pframe, *pframeGray, COLOR_BayerGB2GRAY);
+		imwrite(sfileName, *pframeGray);
+		free(pframeGray);
+		free(pframe);
+		pframe = NULL;
+		pframeGray = NULL;
 		count++;
 	}
 	waitKey(0);
