@@ -22,7 +22,7 @@ int main()
 	//		break;
 	//	}
 	//	cvtColor(frame, frameGray, COLOR_BGR2GRAY);
-	//	string sfileName = "img_00";
+	//	string sfileName = "D:\\picture\\img_00";
 	//	char pBuffer[5];
 	//	_itoa_s(count, pBuffer, 10);
 	//	sfileName += pBuffer;
@@ -33,14 +33,14 @@ int main()
 	//waitKey(0);
 	//return 0;
 
-	// Create a video from frames
+	 //Create a video from frames
 	VideoCapture inputVideo;
 	inputVideo.open("1min_nature.mp4");
 	Mat inputFrame;
 	inputVideo >> inputFrame;
 	Size inputSize(inputFrame.cols, inputFrame.rows);
 	int ex = static_cast<int>(inputVideo.get(CAP_PROP_FOURCC));
-	VideoWriter outputVideo("1mins_nature_CombinedVideo_100fps.mp4", ex, 100, inputSize);
+	VideoWriter outputVideo("1mins_nature_CombinedVideo_5fps.mp4", ex, 5, inputSize);
 	unsigned int count = 0;
 	while (1)
 	{
