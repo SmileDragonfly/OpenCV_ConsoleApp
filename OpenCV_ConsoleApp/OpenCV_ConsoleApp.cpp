@@ -9,26 +9,53 @@ using namespace std;
 using namespace cv;
 int main()
 {
-	VideoCapture video;
-	video.open("BAD_BOY.mp4");
+	//VideoCapture video;
+	//video.open("1min_nature.mp4");
+	//unsigned int count = 0;
+	//while (1)
+	//{
+	//	Mat frame;
+	//	Mat frameGray;
+	//	video >> frame;
+	//	if (frame.data == NULL)
+	//	{
+	//		break;
+	//	}
+	//	cvtColor(frame, frameGray, COLOR_BGR2GRAY);
+	//	string sfileName = "img_00";
+	//	char pBuffer[5];
+	//	_itoa_s(count, pBuffer, 10);
+	//	sfileName += pBuffer;
+	//	sfileName += ".jpg";
+	//	imwrite(sfileName, frameGray);
+	//	count++;
+	//}
+	//waitKey(0);
+	//return 0;
+
+	// Create a video from frames
+	VideoCapture inputVideo;
+	inputVideo.open("1min_nature.mp4");
+	Mat inputFrame;
+	inputVideo >> inputFrame;
+	Size inputSize(inputFrame.cols, inputFrame.rows);
+	int ex = static_cast<int>(inputVideo.get(CAP_PROP_FOURCC));
+	VideoWriter outputVideo("1mins_nature_CombinedVideo_100fps.mp4", ex, 100, inputSize);
 	unsigned int count = 0;
-	void *pData = (void*)1;
 	while (1)
 	{
-		Mat frame;
-		Mat frameGray;
-		video >> frame;
-		if (frame.data == NULL)
-		{
-			break;
-		}
-		cvtColor(frame, frameGray, COLOR_BGR2GRAY);
+		Mat frameToWrite;
 		string sfileName = "img_00";
 		char pBuffer[5];
 		_itoa_s(count, pBuffer, 10);
 		sfileName += pBuffer;
 		sfileName += ".jpg";
-		imwrite(sfileName, frameGray);
+		frameToWrite = imread(sfileName);
+		if (frameToWrite.data == NULL)
+		{
+			break;
+		}
+		outputVideo << frameToWrite;
 		count++;
 	}
 	waitKey(0);
