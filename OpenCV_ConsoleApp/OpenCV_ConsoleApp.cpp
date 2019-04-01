@@ -13,23 +13,22 @@ int main()
 	video.open("BAD_BOY.mp4");
 	unsigned int count = 0;
 	void *pData = (void*)1;
-	while (pData != NULL)
+	while (1)
 	{
-		Mat *pframe = new Mat;
-		Mat* pframeGray = new Mat;;
-		video >> *pframe;
-		pData = pframe->data;
+		Mat frame;
+		Mat frameGray;
+		video >> frame;
+		if (frame.data == NULL)
+		{
+			break;
+		}
+		cvtColor(frame, frameGray, COLOR_BGR2GRAY);
 		string sfileName = "img_00";
 		char pBuffer[5];
 		_itoa_s(count, pBuffer, 10);
 		sfileName += pBuffer;
 		sfileName += ".jpg";
-		cvtColor(*pframe, *pframeGray, COLOR_BayerGB2GRAY);
-		imwrite(sfileName, *pframeGray);
-		free(pframeGray);
-		free(pframe);
-		pframe = NULL;
-		pframeGray = NULL;
+		imwrite(sfileName, frameGray);
 		count++;
 	}
 	waitKey(0);
